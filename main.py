@@ -25,11 +25,14 @@ temp=['','',ID,CNTNR_ID,VSTR_ID, COOKIE_ID, RFFR_URL,CONN_DEVICE_CD,'','','','',
 import event
 event_list=[]
 event_list.append(event.login(temp))
-
-
 event_list.append(event.search(event_list[0]))
 event_list.append(event.click(event_list[1]))
-event_list.append(event.search(event_list[2]))
+event_list.append(event.basket(event_list[2]))
+event_list.append(event.wishlist(event_list[3]))
+event_list.append(event.order(event_list[4]))
+event_list.append(event.order(event_list[5]))
+event_list.append(event.basket(event_list[6]))
+event_list.append(event.event(event_list[7]))
 print(event_list)
 
 
