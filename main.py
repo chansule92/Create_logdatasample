@@ -2,28 +2,118 @@ import random
 import datetime
 import pandas as pd
 import sys 
-from PyQt5.QtWidgets import QComboBox, QApplication,  QPushButton, QLabel,QGridLayout,QLineEdit, QHBoxLayout,QVBoxLayout,QWidget,QRadioButton,QFileDialog, QTextEdit
+from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIntValidator
 import os
 from pathlib import Path
+
+
 
 class Exam(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
 
+
     def initUI(self):
         #프로그램 형태 만들기
         grid = QGridLayout()
-        grid.addWidget(QLabel("Step 1 :"),0,0) 
-        grid.addWidget(QLabel("Step 2 :"),1,0)
-        grid.addWidget(QLabel("Step 3 :"),2,0)
-        grid.addWidget(QLabel("Step 4 :"),3,0)
-        grid.addWidget(QLabel("Step 5 :"),4,0)
-        grid.addWidget(QLabel("Step 6 :"),5,0)
-        grid.addWidget(QLabel("Step 7 :"),6,0)
-        self.PATH = QLabel(" ")
-        grid.addWidget(self.PATH,4,1)
+        step0grid = QHBoxLayout()
+        step0grid.addWidget(QLabel("이벤트 추가/제거"),0)
+        step0grid.addWidget(QLabel(""),0)
+        step0grid.addWidget(QLabel("이벤트 선택"),2)
+        step0grid.addWidget(QLabel(""),0)
+        step0grid.addWidget(QLabel("확률"),4)
+        step1grid = QHBoxLayout()
+        step2grid = QHBoxLayout()
+        step3grid = QHBoxLayout()
+        step4grid = QHBoxLayout()
+        step5grid = QHBoxLayout()
+        step6grid = QHBoxLayout()
+        step7grid = QHBoxLayout()
+        self.Button_add_step1 = QPushButton("+")
+        self.Button_add_step2 = QPushButton("+")
+        self.Button_add_step3 = QPushButton("+")
+        self.Button_add_step4 = QPushButton("+")
+        self.Button_add_step5 = QPushButton("+")
+        self.Button_add_step6 = QPushButton("+")
+        self.Button_add_step7 = QPushButton("+")
+        self.Button_add_step1.setMaximumWidth(56)
+        self.Button_add_step2.setMaximumWidth(25)
+        self.Button_add_step3.setMaximumWidth(25)
+        self.Button_add_step4.setMaximumWidth(25)
+        self.Button_add_step5.setMaximumWidth(25)
+        self.Button_add_step6.setMaximumWidth(25)
+        self.Button_add_step7.setMaximumWidth(25)
+        step1grid.addWidget(self.Button_add_step1,0)
+        step2grid.addWidget(self.Button_add_step2,0)
+        step3grid.addWidget(self.Button_add_step3,0)
+        step4grid.addWidget(self.Button_add_step4,0)
+        step5grid.addWidget(self.Button_add_step5,0)
+        step6grid.addWidget(self.Button_add_step6,0)
+        step7grid.addWidget(self.Button_add_step7,0)
+        self.Button_out_step2 = QPushButton("-")
+        self.Button_out_step3 = QPushButton("-")
+        self.Button_out_step4 = QPushButton("-")
+        self.Button_out_step5 = QPushButton("-")
+        self.Button_out_step6 = QPushButton("-")
+        self.Button_out_step7 = QPushButton("-")
+        self.Button_out_step2.setMaximumWidth(25)
+        self.Button_out_step3.setMaximumWidth(25)
+        self.Button_out_step4.setMaximumWidth(25)
+        self.Button_out_step5.setMaximumWidth(25)
+        self.Button_out_step6.setMaximumWidth(25)
+        self.Button_out_step7.setMaximumWidth(25)
+        step2grid.addWidget(self.Button_out_step2,1)
+        step3grid.addWidget(self.Button_out_step3,1)
+        step4grid.addWidget(self.Button_out_step4,1)
+        step5grid.addWidget(self.Button_out_step5,1)
+        step6grid.addWidget(self.Button_out_step6,1)
+        step7grid.addWidget(self.Button_out_step7,1)
+        step1grid.addWidget(QLabel("Step 1 :"),2) 
+        step2grid.addWidget(QLabel("Step 2 :"),2) 
+        step3grid.addWidget(QLabel("Step 3 :"),2) 
+        step4grid.addWidget(QLabel("Step 4 :"),2) 
+        step5grid.addWidget(QLabel("Step 5 :"),2) 
+        step6grid.addWidget(QLabel("Step 6 :"),2) 
+        step7grid.addWidget(QLabel("Step 7 :"),2) 
+        self.per_edit1=QLineEdit(self)
+        self.per_edit2=QLineEdit(self)
+        self.per_edit3=QLineEdit(self)
+        self.per_edit4=QLineEdit(self)
+        self.per_edit5=QLineEdit(self)
+        self.per_edit6=QLineEdit(self)
+        self.per_edit7=QLineEdit(self)
+        self.per_edit1.setFixedWidth(40)
+        self.per_edit2.setFixedWidth(40)
+        self.per_edit3.setFixedWidth(40)
+        self.per_edit4.setFixedWidth(40)
+        self.per_edit5.setFixedWidth(40)
+        self.per_edit6.setFixedWidth(40)
+        self.per_edit7.setFixedWidth(40)
+        self.per_edit1.setValidator(QIntValidator(self)) 
+        self.per_edit1.setValidator(QIntValidator(1,100,self))
+        self.per_edit1.setText('70')
+        self.per_edit2.setValidator(QIntValidator(self)) 
+        self.per_edit2.setValidator(QIntValidator(1,100,self)) 
+        self.per_edit2.setText('70')
+        self.per_edit3.setValidator(QIntValidator(self)) 
+        self.per_edit3.setValidator(QIntValidator(1,100,self))  
+        self.per_edit3.setText('70')
+        self.per_edit4.setValidator(QIntValidator(self)) 
+        self.per_edit4.setValidator(QIntValidator(1,100,self))  
+        self.per_edit4.setText('70')
+        self.per_edit5.setValidator(QIntValidator(self)) 
+        self.per_edit5.setValidator(QIntValidator(1,100,self)) 
+        self.per_edit5.setText('70') 
+        self.per_edit6.setValidator(QIntValidator(self)) 
+        self.per_edit6.setValidator(QIntValidator(1,100,self))  
+        self.per_edit6.setText('70')
+        self.per_edit7.setValidator(QIntValidator(self)) 
+        self.per_edit7.setValidator(QIntValidator(1,100,self))  
+        self.per_edit7.setText('70')
+
 
         #콤보 박스 생성
         cb1 = QComboBox(self)
@@ -102,14 +192,48 @@ class Exam(QWidget):
         self.SEARCH_BUTTON = QPushButton("찾아보기...")
         self.SEARCH_BUTTON.clicked.connect(self.PATH_SELECT)
         #입력칸 배치
-        grid.addWidget(self.steb1,0,1)
-        grid.addWidget(self.steb2,1,1)
-        grid.addWidget(self.steb3,2,1)
-        grid.addWidget(self.steb4,3,1)
-        grid.addWidget(self.steb5,4,1)
-        grid.addWidget(self.steb6,5,1)
-        grid.addWidget(self.steb7,6,1)
-        grid.addWidget(self.SEARCH_BUTTON,4,2)
+        step1grid.addWidget(self.steb1,3)
+        step2grid.addWidget(self.steb2,3)
+        step3grid.addWidget(self.steb3,3)
+        step4grid.addWidget(self.steb4,3)
+        step5grid.addWidget(self.steb5,3)
+        step6grid.addWidget(self.steb6,3)
+        step7grid.addWidget(self.steb7,3)
+
+        step1grid.addWidget(self.per_edit1,4)
+        step2grid.addWidget(self.per_edit2,4)
+        step3grid.addWidget(self.per_edit3,4)
+        step4grid.addWidget(self.per_edit4,4)
+        step5grid.addWidget(self.per_edit5,4)
+        step6grid.addWidget(self.per_edit6,4)
+        step7grid.addWidget(self.per_edit7,4)
+
+        step1grid.addWidget(QLabel("%"),5) 
+        step2grid.addWidget(QLabel("%"),5) 
+        step3grid.addWidget(QLabel("%"),5) 
+        step4grid.addWidget(QLabel("%"),5) 
+        step5grid.addWidget(QLabel("%"),5) 
+        step6grid.addWidget(QLabel("%"),5) 
+        step7grid.addWidget(QLabel("%"),5) 
+
+
+        grid.addLayout(step0grid,0,0)
+        grid.addLayout(step1grid,1,0)
+        grid.addLayout(step2grid,2,0)
+        grid.addLayout(step3grid,3,0)
+        grid.addLayout(step4grid,4,0)
+        grid.addLayout(step5grid,5,0)
+        grid.addLayout(step6grid,6,0)
+        grid.addLayout(step7grid,7,0)
+
+
+        self.PATH = QLabel(" ")
+        ##grid.addWidget(self.PATH,4,1)
+
+
+
+
+        ##grid.addWidget(self.SEARCH_BUTTON,4,2)
 
         #DB선택 라디오버튼
         #생성,취소버튼
@@ -130,7 +254,7 @@ class Exam(QWidget):
 
         self.setLayout(vbox)
 
-        self.setGeometry(400,400,400,300)
+        self.setGeometry(400,400,300,300)
         self.setWindowTitle('Logdata Creation')
         self.show()
 
