@@ -16,6 +16,10 @@ class Exam(QWidget):
         self.initUI()
 
 
+    def hideHBox(self):
+            # Hide the QHBoxLayout
+            self.layout().itemAt(0).widget().setVisible(False)
+
     def initUI(self):
         #프로그램 형태 만들기
         grid = QGridLayout()
@@ -32,52 +36,72 @@ class Exam(QWidget):
         step5grid = QHBoxLayout()
         step6grid = QHBoxLayout()
         step7grid = QHBoxLayout()
+        #추가버튼
         self.Button_add_step1 = QPushButton("+")
         self.Button_add_step2 = QPushButton("+")
         self.Button_add_step3 = QPushButton("+")
         self.Button_add_step4 = QPushButton("+")
         self.Button_add_step5 = QPushButton("+")
         self.Button_add_step6 = QPushButton("+")
-        self.Button_add_step7 = QPushButton("+")
+        self.Button_add_step1.clicked.connect(self.addstep2)
+        self.Button_add_step2.clicked.connect(self.addstep3)
+        self.Button_add_step3.clicked.connect(self.addstep4)
+        self.Button_add_step4.clicked.connect(self.addstep5)
+        self.Button_add_step5.clicked.connect(self.addstep6)
+        self.Button_add_step6.clicked.connect(self.addstep7)
         self.Button_add_step1.setMaximumWidth(56)
         self.Button_add_step2.setMaximumWidth(25)
         self.Button_add_step3.setMaximumWidth(25)
         self.Button_add_step4.setMaximumWidth(25)
         self.Button_add_step5.setMaximumWidth(25)
         self.Button_add_step6.setMaximumWidth(25)
-        self.Button_add_step7.setMaximumWidth(25)
         step1grid.addWidget(self.Button_add_step1,0)
         step2grid.addWidget(self.Button_add_step2,0)
         step3grid.addWidget(self.Button_add_step3,0)
         step4grid.addWidget(self.Button_add_step4,0)
         step5grid.addWidget(self.Button_add_step5,0)
         step6grid.addWidget(self.Button_add_step6,0)
-        step7grid.addWidget(self.Button_add_step7,0)
+        #삭제버튼
         self.Button_out_step2 = QPushButton("-")
         self.Button_out_step3 = QPushButton("-")
         self.Button_out_step4 = QPushButton("-")
         self.Button_out_step5 = QPushButton("-")
         self.Button_out_step6 = QPushButton("-")
         self.Button_out_step7 = QPushButton("-")
+        self.Button_out_step2.clicked.connect(self.outstep2)
+        self.Button_out_step3.clicked.connect(self.outstep3)
+        self.Button_out_step4.clicked.connect(self.outstep4)
+        self.Button_out_step5.clicked.connect(self.outstep5)
+        self.Button_out_step6.clicked.connect(self.outstep6)
+        self.Button_out_step7.clicked.connect(self.outstep7)
         self.Button_out_step2.setMaximumWidth(25)
         self.Button_out_step3.setMaximumWidth(25)
         self.Button_out_step4.setMaximumWidth(25)
         self.Button_out_step5.setMaximumWidth(25)
         self.Button_out_step6.setMaximumWidth(25)
-        self.Button_out_step7.setMaximumWidth(25)
+        self.Button_out_step7.setMaximumWidth(56)
         step2grid.addWidget(self.Button_out_step2,1)
         step3grid.addWidget(self.Button_out_step3,1)
         step4grid.addWidget(self.Button_out_step4,1)
         step5grid.addWidget(self.Button_out_step5,1)
         step6grid.addWidget(self.Button_out_step6,1)
         step7grid.addWidget(self.Button_out_step7,1)
-        step1grid.addWidget(QLabel("Step 1 :"),2) 
-        step2grid.addWidget(QLabel("Step 2 :"),2) 
-        step3grid.addWidget(QLabel("Step 3 :"),2) 
-        step4grid.addWidget(QLabel("Step 4 :"),2) 
-        step5grid.addWidget(QLabel("Step 5 :"),2) 
-        step6grid.addWidget(QLabel("Step 6 :"),2) 
-        step7grid.addWidget(QLabel("Step 7 :"),2) 
+        #단계라벨
+        self.Steb1Label=QLabel("Step 1 :")
+        self.Steb2Label=QLabel("Step 2 :")
+        self.Steb3Label=QLabel("Step 3 :")
+        self.Steb4Label=QLabel("Step 4 :")
+        self.Steb5Label=QLabel("Step 5 :")
+        self.Steb6Label=QLabel("Step 6 :")
+        self.Steb7Label=QLabel("Step 7 :")
+        step1grid.addWidget(self.Steb1Label,2) 
+        step2grid.addWidget(self.Steb2Label,2) 
+        step3grid.addWidget(self.Steb3Label,2) 
+        step4grid.addWidget(self.Steb4Label,2) 
+        step5grid.addWidget(self.Steb5Label,2) 
+        step6grid.addWidget(self.Steb6Label,2) 
+        step7grid.addWidget(self.Steb7Label,2) 
+        #확률입력
         self.per_edit1=QLineEdit(self)
         self.per_edit2=QLineEdit(self)
         self.per_edit3=QLineEdit(self)
@@ -114,74 +138,31 @@ class Exam(QWidget):
         self.per_edit7.setValidator(QIntValidator(1,100,self))  
         self.per_edit7.setText('70')
 
-
         #콤보 박스 생성
         cb1 = QComboBox(self)
-        cb1.addItem('Login')
-        cb1.addItem('Event')
-        cb1.addItem('Search')
-        cb1.addItem('Click')
-        cb1.addItem('Wishlist')
-        cb1.addItem('Basket')
-        cb1.addItem('Order')
+        cb1.addItems(['선택하세요','Login','Event','Search','Click','Wishlist','Basket','Order'])
         cb1.activated[str].connect(self.onActivated)
         cb2 = QComboBox(self)
-        cb2.addItem('Login')
-        cb2.addItem('Event')
-        cb2.addItem('Search')
-        cb2.addItem('Click')
-        cb2.addItem('Wishlist')
-        cb2.addItem('Basket')
-        cb2.addItem('Order')
+        cb2.addItems(['선택하세요','Login','Event','Search','Click','Wishlist','Basket','Order'])
         cb2.activated[str].connect(self.onActivated)
         cb3 = QComboBox(self)
-        cb3.addItem('Login')
-        cb3.addItem('Event')
-        cb3.addItem('Search')
-        cb3.addItem('Click')
-        cb3.addItem('Wishlist')
-        cb3.addItem('Basket')
-        cb3.addItem('Order')
+        cb3.addItems(['선택하세요','Login','Event','Search','Click','Wishlist','Basket','Order'])
         cb3.activated[str].connect(self.onActivated)
         cb4 = QComboBox(self)
-        cb4.addItem('Login')
-        cb4.addItem('Event')
-        cb4.addItem('Search')
-        cb4.addItem('Click')
-        cb4.addItem('Wishlist')
-        cb4.addItem('Basket')
-        cb4.addItem('Order')
+        cb4.addItems(['선택하세요','Login','Event','Search','Click','Wishlist','Basket','Order'])
         cb4.activated[str].connect(self.onActivated)
         cb5 = QComboBox(self)
-        cb5.addItem('Login')
-        cb5.addItem('Event')
-        cb5.addItem('Search')
-        cb5.addItem('Click')
-        cb5.addItem('Wishlist')
-        cb5.addItem('Basket')
-        cb5.addItem('Order')
+        cb5.addItems(['선택하세요','Login','Event','Search','Click','Wishlist','Basket','Order'])
         cb5.activated[str].connect(self.onActivated)
         cb6 = QComboBox(self)
-        cb6.addItem('Login')
-        cb6.addItem('Event')
-        cb6.addItem('Search')
-        cb6.addItem('Click')
-        cb6.addItem('Wishlist')
-        cb6.addItem('Basket')
-        cb6.addItem('Order')
+        cb6.addItems(['선택하세요','Login','Event','Search','Click','Wishlist','Basket','Order'])
         cb6.activated[str].connect(self.onActivated)
         cb7 = QComboBox(self)
-        cb7.addItem('Login')
-        cb7.addItem('Event')
-        cb7.addItem('Search')
-        cb7.addItem('Click')
-        cb7.addItem('Wishlist')
-        cb7.addItem('Basket')
-        cb7.addItem('Order')
+        cb7.addItems(['선택하세요','Login','Event','Search','Click','Wishlist','Basket','Order'])
         cb7.activated[str].connect(self.onActivated)
 
 
-        #입력 변수 생성
+        #이벤트정의
         self.steb1 = cb1
         self.steb2 = cb2
         self.steb3 = cb3
@@ -191,7 +172,7 @@ class Exam(QWidget):
         self.steb7 = cb7
         self.SEARCH_BUTTON = QPushButton("찾아보기...")
         self.SEARCH_BUTTON.clicked.connect(self.PATH_SELECT)
-        #입력칸 배치
+
         step1grid.addWidget(self.steb1,3)
         step2grid.addWidget(self.steb2,3)
         step3grid.addWidget(self.steb3,3)
@@ -207,15 +188,36 @@ class Exam(QWidget):
         step5grid.addWidget(self.per_edit5,4)
         step6grid.addWidget(self.per_edit6,4)
         step7grid.addWidget(self.per_edit7,4)
-
-        step1grid.addWidget(QLabel("%"),5) 
-        step2grid.addWidget(QLabel("%"),5) 
-        step3grid.addWidget(QLabel("%"),5) 
-        step4grid.addWidget(QLabel("%"),5) 
-        step5grid.addWidget(QLabel("%"),5) 
-        step6grid.addWidget(QLabel("%"),5) 
-        step7grid.addWidget(QLabel("%"),5) 
-
+        #숨김정의
+        self.Button_add_step2.setVisible(False)
+        self.Button_out_step2.setVisible(False)
+        self.Steb2Label.setVisible(False)
+        self.steb2.setVisible(False)
+        self.per_edit2.setVisible(False)
+        self.Button_add_step3.setVisible(False)
+        self.Button_out_step3.setVisible(False)
+        self.Steb3Label.setVisible(False)
+        self.steb3.setVisible(False)
+        self.per_edit3.setVisible(False)
+        self.Button_add_step4.setVisible(False)
+        self.Button_out_step4.setVisible(False)
+        self.Steb4Label.setVisible(False)
+        self.steb4.setVisible(False)
+        self.per_edit4.setVisible(False)
+        self.Button_add_step5.setVisible(False)
+        self.Button_out_step5.setVisible(False)
+        self.Steb5Label.setVisible(False)
+        self.steb5.setVisible(False)
+        self.per_edit5.setVisible(False)
+        self.Button_add_step6.setVisible(False)
+        self.Button_out_step6.setVisible(False)
+        self.Steb6Label.setVisible(False)
+        self.steb6.setVisible(False)
+        self.per_edit6.setVisible(False)
+        self.Button_out_step7.setVisible(False)
+        self.Steb7Label.setVisible(False)
+        self.steb7.setVisible(False)
+        self.per_edit7.setVisible(False)
 
         grid.addLayout(step0grid,0,0)
         grid.addLayout(step1grid,1,0)
@@ -228,7 +230,7 @@ class Exam(QWidget):
 
 
         self.PATH = QLabel(" ")
-        ##grid.addWidget(self.PATH,4,1)
+        grid.addWidget(self.PATH,8,1)
 
 
 
@@ -239,7 +241,7 @@ class Exam(QWidget):
         #생성,취소버튼
         CreateButton = QPushButton("생성")
         CancleButton = QPushButton("취소")
-        ##CreateButton.clicked.connect(self.CreateJson)
+        CreateButton.clicked.connect(self.CreateButton)
         CancleButton.clicked.connect(self.close)
 
         hbox = QHBoxLayout()
@@ -254,14 +256,121 @@ class Exam(QWidget):
 
         self.setLayout(vbox)
 
-        self.setGeometry(400,400,300,300)
+        self.setGeometry(400,400,300,50)
         self.setWindowTitle('Logdata Creation')
         self.show()
 
+    def CreateButton(self):
+        step_list=[]
+        if self.steb1.currentText()!='선택하세요':
+           step_list.append(self.steb1.currentText())
+        if self.steb2.currentText()!='선택하세요':
+           step_list.append(self.steb2.currentText())
+        if self.steb3.currentText()!='선택하세요':
+           step_list.append(self.steb3.currentText())
+        if self.steb4.currentText()!='선택하세요':
+           step_list.append(self.steb4.currentText())
+        if self.steb5.currentText()!='선택하세요':
+           step_list.append(self.steb5.currentText())
+        if self.steb6.currentText()!='선택하세요':
+           step_list.append(self.steb6.currentText())
+        if self.steb7.currentText()!='선택하세요':
+           step_list.append(self.steb7.currentText())
+
+
+
+        print(step_list)
+
+    def addstep2(self):
+        self.Button_add_step2.setVisible(True)
+        self.Button_out_step2.setVisible(True)
+        self.Steb2Label.setVisible(True)
+        self.steb2.setVisible(True)
+        self.per_edit2.setVisible(True)
+
+    def addstep3(self):
+        self.Button_add_step3.setVisible(True)
+        self.Button_out_step3.setVisible(True)
+        self.Steb3Label.setVisible(True)
+        self.steb3.setVisible(True)
+        self.per_edit3.setVisible(True)
+
+    def addstep4(self):
+        self.Button_add_step4.setVisible(True)
+        self.Button_out_step4.setVisible(True)
+        self.Steb4Label.setVisible(True)
+        self.steb4.setVisible(True)
+        self.per_edit4.setVisible(True)
+
+    def addstep5(self):
+        self.Button_add_step5.setVisible(True)
+        self.Button_out_step5.setVisible(True)
+        self.Steb5Label.setVisible(True)
+        self.steb5.setVisible(True)
+        self.per_edit5.setVisible(True)
+
+    def addstep6(self):
+        self.Button_add_step6.setVisible(True)
+        self.Button_out_step6.setVisible(True)
+        self.Steb6Label.setVisible(True)
+        self.steb6.setVisible(True)
+        self.per_edit6.setVisible(True)
+
+    def addstep7(self):
+        self.Button_out_step7.setVisible(True)
+        self.Steb7Label.setVisible(True)
+        self.steb7.setVisible(True)
+        self.per_edit7.setVisible(True)
+
+    def outstep2(self):
+        self.Button_add_step2.setVisible(False)
+        self.Button_out_step2.setVisible(False)
+        self.Steb2Label.setVisible(False)
+        self.steb2.setVisible(False)
+        self.per_edit2.setVisible(False)
+
+
+    def outstep3(self):
+        self.Button_add_step3.setVisible(False)
+        self.Button_out_step3.setVisible(False)
+        self.Steb3Label.setVisible(False)
+        self.steb3.setVisible(False)
+        self.per_edit3.setVisible(False)
+
+
+    def outstep4(self):
+        self.Button_add_step4.setVisible(False)
+        self.Button_out_step4.setVisible(False)
+        self.Steb4Label.setVisible(False)
+        self.steb4.setVisible(False)
+        self.per_edit4.setVisible(False)
+
+
+    def outstep5(self):
+        self.Button_add_step5.setVisible(False)
+        self.Button_out_step5.setVisible(False)
+        self.Steb5Label.setVisible(False)
+        self.steb5.setVisible(False)
+        self.per_edit5.setVisible(False)
+
+
+    def outstep6(self):
+        self.Button_add_step6.setVisible(False)
+        self.Button_out_step6.setVisible(False)
+        self.Steb6Label.setVisible(False)
+        self.steb6.setVisible(False)
+        self.per_edit6.setVisible(False)
+
+
+    def outstep7(self):
+        self.Button_out_step7.setVisible(False)
+        self.Steb7Label.setVisible(False)
+        self.steb7.setVisible(False)
+        self.per_edit7.setVisible(False)
+
 
     def onActivated(self,text):
-        self.lbl.setText(text)
-        self.lbl.adjustSize()
+        text
 
     def PATH_SELECT(self):
         dirName = QFileDialog.getExistingDirectory(self,self.tr("Open Data file"),"./",QFileDialog.ShowDirsOnly)
