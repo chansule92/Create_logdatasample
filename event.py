@@ -102,7 +102,7 @@ def basket(temp,bsk_number,k):
     BRAND_CD = PRDT_MST[PRDT_MST['PRDT_CD']==PRDT_CD]['BRAND_CD'].iloc[0]
     PRDT_QTY = random.randrange(1,5)
     BASKET_NO = 'BSK'+lpad(bsk_number,6,'0')
-    NORM_SALE_AMT = 15000
+    NORM_SALE_AMT = PRDT_MST[PRDT_MST['PRDT_CD']==PRDT_CD]['SALE_PRICE'].iloc[0]
     ORD_NO = ''
     SALE_AMT = ''
     LOAD_DTTM = temp[18]
