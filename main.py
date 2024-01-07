@@ -38,6 +38,7 @@ class Exam(QWidget):
         step5grid = QHBoxLayout()
         step6grid = QHBoxLayout()
         step7grid = QHBoxLayout()
+        dategrid = QHBoxLayout()
         #추가버튼
         self.Button_add_step1 = QPushButton("+")
         self.Button_add_step2 = QPushButton("+")
@@ -88,6 +89,7 @@ class Exam(QWidget):
         step5grid.addWidget(self.Button_out_step5)
         step6grid.addWidget(self.Button_out_step6)
         step7grid.addWidget(self.Button_out_step7)
+        dategrid.addWidget(QLabel("생성날짜 : "))
         #단계라벨
         self.Steb1Label=QLabel("Step 1 :")
         self.Steb2Label=QLabel("Step 2 :")
@@ -220,7 +222,16 @@ class Exam(QWidget):
         cb7 = QComboBox(self)
         cb7.addItems(['선택하세요','Login','Event','Search','Click','Wishlist','Basket','Order'])
         cb7.activated[str].connect(self.onActivated7)
-
+        #생성시간
+        self.start_date=QLineEdit(self)
+        self.end_date=QLineEdit(self)
+        dategrid.addWidget(self.start_date)
+        dategrid.addWidget(QLabel("~"))
+        dategrid.addWidget(self.end_date)
+        self.start_date.setText('20240101')
+        self.end_date.setText('20240131')
+        self.start_date.setFixedWidth(80)
+        self.end_date.setFixedWidth(80)
 
         #이벤트정의
         self.steb1 = cb1
@@ -316,10 +327,11 @@ class Exam(QWidget):
         grid.addLayout(step5grid,5,0,alignment=Qt.AlignTop)
         grid.addLayout(step6grid,6,0,alignment=Qt.AlignTop)
         grid.addLayout(step7grid,7,0,alignment=Qt.AlignTop)
+        grid.addLayout(dategrid,8,0,alignment=Qt.AlignTop)
 
 
         self.PATH = QLabel(" ")
-        grid.addWidget(self.PATH,8,1)
+        grid.addWidget(self.PATH,9,1)
 
 
 
@@ -495,6 +507,7 @@ class Exam(QWidget):
     def close(self):
         sys.exit()
 
+
     def CreateButton(self):
         step_list=[]
         if self.steb1.currentText()!='선택하세요':
@@ -531,57 +544,60 @@ class Exam(QWidget):
             hour = random.randint(0, 23)
             minute = random.randint(0, 59)
             second = random.randint(0, 59)
-            now = datetime.datetime.now()
-            rand_time = datetime.datetime(now.year, now.month, now.day, hour, minute, second)
+            random_date=event.generate_random_date(self.start_date.text(),self.end_date.text())
+            year=int(random_date[0:4])
+            month=int(random_date[4:6])
+            day=int(random_date[6:8])
+            rand_time = datetime.datetime(year, month, day, hour, minute, second)
             TIME=rand_time.strftime("%Y%m%d%H%M%S")
             temp=['','',CUST_ID,CNTNR_ID,VSTR_ID, COOKIE_ID, RFFR_URL,CONN_DEVICE_CD,'','','','','','','','','','',TIME]
-            psn_event_list=[]
             for j in step_list:
                 if j[0]=='Login' and random.randint(0,100)<=j[1]:
                     temp=event.login(temp)
-                    psn_event_list.append(temp)
+                    event_list.append(temp)
                     random_second=random.randint(0,j[2])
                     temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                 elif j[0]=='Event' and random.randint(0,100)<=j[1]:
                     temp=event.event(temp)
-                    psn_event_list.append(temp)
+                    event_list.append(temp)
                     random_second=random.randint(0,j[2])
                     temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                 elif j[0]=='Search' and random.randint(0,100)<=j[1]:
                     temp=event.search(temp)
-                    psn_event_list.append(temp)
+                    event_list.append(temp)
                     random_second=random.randint(0,j[2])
                     temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                 elif j[0]=='Click' and random.randint(0,100)<=j[1]:
                     temp=event.click(temp)
-                    psn_event_list.append(temp)
+                    event_list.append(temp)
                     random_second=random.randint(0,j[2])
                     temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                 elif j[0]=='Wishlist' and random.randint(0,100)<=j[1]:
                     temp=event.wishlist(temp)
-                    psn_event_list.append(temp)
+                    event_list.append(temp)
                     random_second=random.randint(0,j[2])
                     temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                 elif j[0]=='Basket' and random.randint(0,100)<=j[1]:
                     for k in range(0,random.randint(0,j[3])):
                         temp=event.basket(temp,bsk_number,k)
-                        psn_event_list.append(temp)
+                        event_list.append(temp)
                     bsk_number=bsk_number+1
                     random_second=random.randint(0,j[2])
                     temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                 elif j[0]=='Order' and random.randint(0,100)<=j[1]:
                     for k0 in range(0,random.randint(0,j[3])):
                         temp=event.order(temp,ord_number,k0)
-                        psn_event_list.append(temp)
+                        event_list.append(temp)
                     ord_number=ord_number+1
                     random_second=random.randint(0,j[2])
                     temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                 else :
                     break
-            event_list.append(psn_event_list)
-        df=pd.DataFrame(event_list[0])
+
+        df=pd.DataFrame(event_list)
+        
         df.columns=['MSG_ID','MSG_NAME','CUST_ID','CNTNR_ID','VSTR_ID','COOKIE_ID','RFFR_URL','CONN_DEVICE_CD','SITE_EVNT_ID','SEARCH_WORD','PRDT_CD','CATE_CD','BRAND_CD','PRDT_QTY','BASKET_NO','NORM_SALE_AMT','ORD_NO','SALE_AMT','LOG_DTTM']
-        df.sort_values(by=['LOG_DTTM','CUST_ID']).reset_index(drop=True)
+        df=df.sort_values(by=['LOG_DTTM','CUST_ID']).reset_index(drop=True)
         now = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
         df.to_csv(self.dirName + """\\{}_logdata.csv""".format(now),index=False,encoding='cp949')
 

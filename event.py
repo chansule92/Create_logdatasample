@@ -1,5 +1,6 @@
 import random
 import pandas as pd
+from datetime import datetime, timedelta
 WORD_LIST=pd.read_csv('SEARCH_WORD.csv')
 WORD_LIST=WORD_LIST[['word']].values.tolist()
 SITE_EVENT_LIST=pd.read_csv('SITE_EVENT.csv')
@@ -183,3 +184,16 @@ def event(temp):
     SALE_AMT = ''
     LOAD_DTTM = temp[18]
     return [MSG_ID, MSG_NAME, CUST_ID, CNTNR_ID, VSTR_ID, COOKIE_ID, RFFR_URL,CONN_DEVICE_CD, SITE_EVNT_ID, SEARCH_WORD, PRDT_CD, CATE_CD, BRAND_CD, PRDT_QTY, BASKET_NO, NORM_SALE_AMT, ORD_NO, SALE_AMT, LOAD_DTTM]
+
+
+def generate_random_date(start_date_str, end_date_str):
+    start_date = datetime.strptime(start_date_str, '%Y%m%d')
+    end_date = datetime.strptime(end_date_str, '%Y%m%d')
+
+    date_difference = (end_date - start_date).days
+
+    random_days = random.randint(0, date_difference)
+
+    random_date = start_date + timedelta(days=random_days)
+
+    return random_date.strftime('%Y%m%d')
