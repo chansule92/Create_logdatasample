@@ -553,47 +553,46 @@ class Exam(QWidget):
             temp=['','',CUST_ID,CNTNR_ID,VSTR_ID, COOKIE_ID, RFFR_URL,CONN_DEVICE_CD,'','','','','','','','','','',TIME]
             for j in step_list:
                 if j[0]=='Login' and random.randint(0,100)<=j[1]:
+                    temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                     temp=event.login(temp)
                     event_list.append(temp)
                     random_second=random.randint(0,j[2])
-                    temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                 elif j[0]=='Event' and random.randint(0,100)<=j[1]:
+                    temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                     temp=event.event(temp)
                     event_list.append(temp)
                     random_second=random.randint(0,j[2])
-                    temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                 elif j[0]=='Search' and random.randint(0,100)<=j[1]:
+                    temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                     temp=event.search(temp)
                     event_list.append(temp)
                     random_second=random.randint(0,j[2])
-                    temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                 elif j[0]=='Click' and random.randint(0,100)<=j[1]:
+                    temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                     temp=event.click(temp)
                     event_list.append(temp)
                     random_second=random.randint(0,j[2])
-                    temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                 elif j[0]=='Wishlist' and random.randint(0,100)<=j[1]:
+                    temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                     temp=event.wishlist(temp)
                     event_list.append(temp)
-                    random_second=random.randint(0,j[2])
-                    temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
+                    random_second=random.randint(0,j[2])  
                 elif j[0]=='Basket' and random.randint(0,100)<=j[1]:
+                    temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                     for k in range(0,random.randint(0,j[3])):
                         temp=event.basket(temp,bsk_number,k)
                         event_list.append(temp)
                     bsk_number=bsk_number+1
                     random_second=random.randint(0,j[2])
-                    temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                 elif j[0]=='Order' and random.randint(0,100)<=j[1]:
+                    temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                     for k0 in range(0,random.randint(0,j[3])):
                         temp=event.order(temp,ord_number,k0)
                         event_list.append(temp)
                     ord_number=ord_number+1
                     random_second=random.randint(0,j[2])
-                    temp[18]=(datetime.datetime.strptime(temp[18],'%Y%m%d%H%M%S')+datetime.timedelta(seconds=random_second)).strftime('%Y%m%d%H%M%S')
                 else :
                     break
-
         df=pd.DataFrame(event_list)
         
         df.columns=['MSG_ID','MSG_NAME','CUST_ID','CNTNR_ID','VSTR_ID','COOKIE_ID','RFFR_URL','CONN_DEVICE_CD','SITE_EVNT_ID','SEARCH_WORD','PRDT_CD','CATE_CD','BRAND_CD','PRDT_QTY','BASKET_NO','NORM_SALE_AMT','ORD_NO','SALE_AMT','LOG_DTTM']
